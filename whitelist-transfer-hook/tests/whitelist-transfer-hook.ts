@@ -90,6 +90,22 @@ describe("whitelist-transfer-hook", () => {
     console.log("Transaction signature:", tx);
   });
 
+  it("Close whiteliest pda", async () => {
+    const tx = await program.methods.closeWhitelistPda()
+      .accountsStrict({
+        admin: provider.publicKey,
+        user : user.publicKey,
+        whitelist : whitelistPDA,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .rpc();
+    const whitelistPDAAccount = await program.account.whitelist.fetch(whitelistPDA);
+  
+    // console.log("\nWhitelist initialized:", whitelistPDA.toBase58());
+    console.log("\nWhitelist initialized:", whitelistPDAAccount);
+    console.log("Transaction signature:", tx);
+  });
+
   // it("Add user to whitelist", async () => {
   //   const tx = await program.methods.addToWhitelist(provider.publicKey)
   //     .accountsPartial({

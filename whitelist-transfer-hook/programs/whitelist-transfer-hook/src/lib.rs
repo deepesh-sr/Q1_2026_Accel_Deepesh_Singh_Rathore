@@ -26,6 +26,9 @@ pub mod whitelist_transfer_hook {
     pub fn initialize_whitelist(ctx: Context<InitializeWhitelistPDA>) -> Result<()> {
         ctx.accounts.initialize_whitelist(ctx.bumps)
     }
+    pub fn close_whitelist_pda(ctx: Context<CloseWhitelistPDA>) -> Result<()> {
+        ctx.accounts.close_whitelist_pda(ctx.bumps)
+    }
 
     // pub fn add_to_whitelist(ctx: Context<WhitelistOperations>, user: Pubkey) -> Result<()> {
     //     ctx.accounts.add_to_whitelist(user)
