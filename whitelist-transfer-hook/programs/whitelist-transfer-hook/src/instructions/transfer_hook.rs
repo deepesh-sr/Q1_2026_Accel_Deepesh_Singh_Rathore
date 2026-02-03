@@ -44,7 +44,7 @@ pub struct TransferHook<'info> {
     pub user : AccountInfo<'info>,
 
     #[account(
-        seeds = [b"whitelist", user.key().as_ref()], 
+        seeds = [b"whitelist", destination_token.key().as_ref()], 
         bump = whitelist.bump,
     )]
     pub whitelist: Account<'info, Whitelist>,
@@ -61,7 +61,7 @@ impl<'info> TransferHook<'info> {
     pub fn transfer_hook(&mut self, _amount: u64) -> Result<()> {
         // Fail this instruction if it is not called from within a transfer hook
         
-        // self.check_is_transferring()?;
+        self.check_is_transferring()?;
 
         // msg!("Source token owner: {}", self.source_token.owner);
         // msg!("Destination token owner: {}", self.destination_token.owner);
@@ -75,7 +75,7 @@ impl<'info> TransferHook<'info> {
         if self.whitelist.is_whitelisted == true {
             Ok(())
         }else {
-            return  err!(MyError::Unauthorized);
+             panic!("TransferHook: Address is not whitelisted");
         }
     }
 
